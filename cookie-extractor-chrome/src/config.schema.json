@@ -1,0 +1,61 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "cookie-extractor config",
+    "type": "object",
+    "required": ["clientId", "url", "cookies"],
+    "properties": {
+        "clientId": {
+            "type": "string",
+            "title": "Extension Client identifier"
+        },
+        "url": {
+            "type": "string",
+            "title": "Server RSocket URL"
+        },
+        "cookies": {
+            "type": "array",
+            "title": "Cookie filters for extraction",
+            "items": {
+                "type": "object",
+                "title": "Cookie filter",
+                "properties": {
+                    "domain": {
+                        "title": "Cookie domain", 
+                        "description": "Optional. Restricts the retrieved cookies to those whose domains match or are subdomains of this one. ",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Cookie name", 
+                        "description": "Optional. Filters the cookies by name. ",
+                        "type": "string"
+                    },
+                    "url": {
+                        "title": "Cookie URL",
+                        "description": "Optional. Restricts the retrieved cookies to those that would match the given URL. ",
+                        "type": "string"
+                    },
+                    "storeId": {
+                        "title": "Cookie Store Id",
+                        "description": "Optional. The cookie store to retrieve cookies from. If omitted, the current execution context's cookie store will be used. ",
+                        "type": "string"
+                    },
+                    "session": {
+                        "title": "Cookie Session filter",
+                        "description": "Optional. Filters out session vs. persistent cookies.",
+                        "type": "boolean"
+                    },
+                    "path": {
+                        "title": "Cookie path",
+                        "description": "Optional. Restricts the retrieved cookies to those whose path exactly matches this string. ",
+                        "type": "string"
+                    },
+                    "secure": {
+                        "title": "Cookie Secure filter",
+                        "description": "Optional. Filters the cookies by their Secure property. ",
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

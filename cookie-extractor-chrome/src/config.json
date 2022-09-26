@@ -1,0 +1,6 @@
+{
+    "$schema": "./config.schema.json",
+    "clientId": "main",
+    "url": "ws://localhost:9092/",
+    "cookies": []   
+}
