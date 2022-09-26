@@ -11,11 +11,8 @@ const manifest: chrome.runtime.Manifest = {
     host_permissions: [
         "<all_urls>"
     ],
-    action: {},
-    options_page: "opts.html",
     permissions: [
-        "cookies",
-        "storage"
+        "cookies"
     ],
     icons: {
         64: "icon.png"

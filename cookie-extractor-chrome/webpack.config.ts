@@ -1,26 +1,26 @@
 import path from "path";
 import webpack from "webpack";
+import fs from "fs";
 
 import Copy from 'copy-webpack-plugin';
-import Html from 'html-webpack-plugin';
-import Css from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-import { pkg, loadModule } from "./pkg";
+import { loadModule } from "./pkg";
+import { fstat } from "fs";
 
 export default (env: any, argv: any) => {
 
     const isDev = argv.mode === "development";
-
+    const dist = path.resolve(__dirname, 'dist')
     const config: webpack.Configuration = {
         entry: {
-            background: "./src/background.ts",
-            opts: "./src/opts.tsx"
+            background: "./src/background.ts"
         },
         output: {
-            path: path.resolve(__dirname, 'dist'),
-            assetModuleFilename: "[base]",
-            clean: true
+            path: dist,
+            clean: {
+                keep: "config.json"
+            }
         },
         performance: {
             maxAssetSize: 1500000,
@@ -28,29 +28,17 @@ export default (env: any, argv: any) => {
         },
         optimization: {
             minimize: !isDev,
-            /*splitChunks: {
-                chunks: "all",
-                cacheGroups: {
-                    "react-dom": {
-                        test: /[\\/]node_modules[\\/]react-dom[\\/]/,
-                        name: "react-dom"
-                    },
-                    "mui": {
-                        test: /[\\/]node_modules[\\/]@mui[\\/]/,
-                        name: "mui"
-                    },
-                    defaultVendor: {
-                        name: "vendors",
-                        priority: -10
-                    }
-                }
-            }  */
         },
         devtool: isDev ? "source-map" : false,
         plugins: [
             new Copy({
                 patterns: [ 
                     "./src/icon/icon.png",
+                    "./src/config.schema.json",
+                    { 
+                        from:"./src/config.json",
+                        filter: async (p) => new Promise((r) => fs.access(path.resolve(dist, path.basename(p)), e => r(Boolean(e))))
+                    },
                     { 
                         from: "./manifest.ts", 
                         to: "manifest.json", 
@@ -58,12 +46,6 @@ export default (env: any, argv: any) => {
                     }
                 ]
             }),
-            new Html({
-                title: `${pkg.name} options`,
-                chunks: [ 'opts' ],
-                filename: "opts.html"
-            }),
-            new Css(),
             new webpack.ProvidePlugin({
                 Buffer: ['buffer', 'Buffer'],
             }),
@@ -72,22 +54,14 @@ export default (env: any, argv: any) => {
         module: {
             rules: [
                 {
-                    test: /\.tsx?$/i,
+                    test: /\.ts$/i,
                     loader: 'ts-loader',
                     exclude: ['/node_modules/'],
-                },
-                {
-                    test: /\.css$/i,
-                    use: [Css.loader, "css-loader"]
-                },
-                {
-                    test: /\.svg$/i,
-                    type: "asset"
                 }
             ]
         },
         resolve: {
-            extensions: ['.js', '.ts', '.tsx'],
+            extensions: ['.js', '.ts'],
             fallback: {
                 buffer: require.resolve('buffer/'),
             }
