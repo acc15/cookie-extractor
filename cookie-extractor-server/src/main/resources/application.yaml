@@ -1,0 +1,9 @@
+logging:
+  level:
+    ru.vm.cookieserver: debug
+
+spring:
+  rsocket:
+    server:
+      transport: websocket
+      port: 9420
