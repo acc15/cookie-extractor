@@ -1,8 +1,12 @@
 
+
 export interface Config {
     clientId: string;
     url: string;
     cookies: Array<chrome.cookies.GetAllDetails>;
+    debounceTimeout: number;
+    retryTimeout: number;
+    maxRetries: number;
 }
 
 export async function loadConfig(): Promise<Config> {

@@ -14,10 +14,7 @@
         "@types/chrome": "^0.0.196",
         "@types/copy-webpack-plugin": "^10.1.0",
         "@types/node": "^18.7.18",
-        "@types/rsocket-core": "^0.0.7",
-        "@types/rsocket-websocket-client": "^0.0.4",
         "@types/webpack-bundle-analyzer": "^4.4.2",
-        "buffer": "^6.0.3",
         "copy-webpack-plugin": "^11.0.0",
         "ts-loader": "^9.3.1",
         "ts-node": "^10.9.1",
@@ -28,8 +25,5 @@
         "webpack-cli": "^4.10.0"
     },
     "dependencies": {
-        "rsocket-composite-metadata": "^1.0.0-alpha.3",
-        "rsocket-core": "^1.0.0-alpha.3",
-        "rsocket-websocket-client": "^1.0.0-alpha.3"
     }
 }

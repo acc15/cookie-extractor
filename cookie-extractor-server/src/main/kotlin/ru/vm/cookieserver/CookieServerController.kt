@@ -1,17 +1,18 @@
 package ru.vm.cookieserver
 
 import mu.KotlinLogging
-import org.springframework.messaging.handler.annotation.MessageMapping
-import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import ru.vm.cookieserver.model.CookieRequest
 
 private val log = KotlinLogging.logger {  }
 
-@Controller
+@RestController
 class CookieServerController {
 
-    @MessageMapping("cookie")
-    suspend fun handleCookie(data: CookieRequest) {
+    @PostMapping("/cookies")
+    suspend fun handleCookies(@RequestBody data: CookieRequest) {
         log.debug { "Received data: $data" }
     }
 

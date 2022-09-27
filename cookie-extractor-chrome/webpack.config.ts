@@ -6,7 +6,6 @@ import Copy from 'copy-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { loadModule } from "./pkg";
-import { fstat } from "fs";
 
 export default (env: any, argv: any) => {
 
@@ -46,9 +45,6 @@ export default (env: any, argv: any) => {
                     }
                 ]
             }),
-            new webpack.ProvidePlugin({
-                Buffer: ['buffer', 'Buffer'],
-            }),
             env.analyze && new BundleAnalyzerPlugin()
         ].filter(v => v),
         module: {
@@ -61,10 +57,7 @@ export default (env: any, argv: any) => {
             ]
         },
         resolve: {
-            extensions: ['.js', '.ts'],
-            fallback: {
-                buffer: require.resolve('buffer/'),
-            }
+            extensions: ['.js', '.ts']
         }
     };
     return config;

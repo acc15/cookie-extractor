@@ -56,6 +56,18 @@
                     }
                 }
             }
+        },
+        "debounceTimeout": {
+            "type": "number",
+            "title": "Amount of time to wait for consecutive events (such as Cookie changes)"
+        },
+        "retryTimeout": {
+            "type": "number",
+            "title": "Retry timeout"
+        },
+        "maxRetries": {
+            "type": "number",
+            "title": "Maximum count of retries"
         }
     }
 }
