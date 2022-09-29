@@ -2,6 +2,7 @@
     "name": "cookie-extractor-chrome",
     "version": "1.0.0",
     "private": true,
+    "description": "Chrome extension which fetches cookies from browser and sends them to backend",
     "scripts": {
         "build": "webpack --mode=production",
         "analyze": "webpack --mode=production --env analyze",
