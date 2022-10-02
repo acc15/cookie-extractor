@@ -1,6 +1,9 @@
 logging:
   level:
-    ru.vm.cookieserver: debug
+    ru.vm.cookieextractor: debug
 
 server:
   port: 9420
+
+cookie-extractor:
+  dir: cookies

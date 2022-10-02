@@ -1,4 +1,4 @@
-package ru.vm.cookieserver.model
+package ru.vm.cookieextractor.server.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty

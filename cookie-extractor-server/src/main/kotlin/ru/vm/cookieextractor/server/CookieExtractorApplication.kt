@@ -1,11 +1,11 @@
-package ru.vm.cookieserver
+package ru.vm.cookieextractor.server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class CookieServerApplication
+class CookieExtractorApplication
 
 fun main(args: Array<String>) {
-	runApplication<CookieServerApplication>(*args)
+	runApplication<CookieExtractorApplication>(*args)
 }
