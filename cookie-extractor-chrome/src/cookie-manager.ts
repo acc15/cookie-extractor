@@ -27,7 +27,11 @@ export default class CookieManager {
             console.info(`Cookies has been successfully send to ${this.cfg.url}`)
         } catch (e: any) {
             if (e.message === "Failed to fetch") {
-                console.info(`Unable to send data to server due to connection problems. Retry ${this.retryNumber}`, e);
+                console.info("Unable to send data to server due to connection problems", 
+                    `\nRetry: ${this.retryNumber}`, 
+                    "\nError:", e, 
+                    "\nData:", data
+                );
                 this.retry();
             } else {
                 // Unknown error (no retry)

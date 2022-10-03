@@ -1,0 +1,18 @@
+{
+    "cookies": [
+        {
+            "domain": ".gosuslugi.ru",
+            "expirationDate": 1664737732.401026,
+            "hostOnly": false,
+            "httpOnly": false,
+            "name": "acc_t",
+            "path": "/",
+            "sameSite": "unspecified",
+            "secure": false,
+            "session": false,
+            "storeId": "0",
+            "value": "eyJ2ZXIiOjEsInR5cCI6IkpXVCIsInNidCI6ImFjY2VzcyIsImFsZyI6IlJTMjU2In0.eyJuYmYiOjE2NjQ3MjY5MzIsInNjb3BlIjoiaHR0cDpcL1wvZXNpYS5nb3N1c2x1Z2kucnVcL3Vzcl9pbmY_bW9kZT13Jm9pZD0yNDI1NTE5NDUgaHR0cDpcL1wvZXNpYS5nb3N1c2x1Z2kucnVcL3Vzcl9zZWM_bW9kZT13Jm9pZD0yNDI1NTE5NDUgaHR0cDpcL1wvZXNpYS5nb3N1c2x1Z2kucnVcL3Vzcl90cm0_bW9kZT13Jm9pZD0yNDI1NTE5NDUgb3BlbmlkIiwiaXNzIjoiaHR0cDpcL1wvZXNpYS5nb3N1c2x1Z2kucnVcLyIsInVybjplc2lhOnNpZCI6ImUyYTgwYzQyLTg0NjUtNGVkYy1hMjhjLTRmMGNlMmY1YjMwZiIsInVybjplc2lhOnNial9pZCI6MjQyNTUxOTQ1LCJleHAiOjE2NjQ3Mzc3MzIsImlhdCI6MTY2NDcyNjkzMiwiY2xpZW50X2lkIjoiUEdVIn0.eCR9hmghSe5WCe-YLwhrH1KXHbNeb09z7XaTYY8gOpelQ4J7Jg11nLV2vsPnp8WaSSMeXCrv0MBYUlUCJ8DJjOQRuYviTXG0vn-KHWlK_C8QgPMHzAzAcDf5yqL-XKgyUlbF1gE72NkMk81txUqlV3CUFAWoKFB6Npk5tk4vDKLHCDj9Ec5PhFGNxaHQ8OossuvKBsDlw303Eco4WDKlsMkQcHojYPs-Q0aQpn3AOceXckabwhZ0y_rqvbltB37idmso8bw1KP_kENxlGyhp-Pc-rGnWYMDvx0RIEOo-WBJWcaGN60mmQXMng7SsS6aSNtxaH0xWv6Dof2T_DgP9xA"
+        }
+    ],
+    "clientId": "main"
+}

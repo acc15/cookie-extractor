@@ -15,7 +15,6 @@ repositories {
 	mavenCentral()
 }
 
-
 val freeMarkerVersion = "2.3.31"
 val kotlinLoggingVersion = "3.0.0"
 
@@ -26,6 +25,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
 	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
