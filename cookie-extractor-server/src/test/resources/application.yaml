@@ -7,5 +7,3 @@ logging:
     console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %5p %50t %-40.40logger{39} %X{traceId} : %m%n%wEx'
   level:
     ru.vm.cookieextractor: debug
-cookie-extractor:
-  property-template: '${cookie.name?upper_case}'

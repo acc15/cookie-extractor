@@ -7,7 +7,5 @@ import java.nio.file.Path
 @ConstructorBinding
 @ConfigurationProperties(prefix = "cookie-extractor")
 data class CookieExtractorProperties(
-    val dir: Path = Path.of("").toAbsolutePath(),
-    val fileTemplate: String = "\${request.clientId}.properties",
-    val propertyTemplate: String = "COOKIE_\${cookie.name?upper_case}"
+    val files: Map<String, Path> = emptyMap()
 )

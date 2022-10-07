@@ -24,7 +24,7 @@ import kotlin.random.Random
 
 private val log = KotlinLogging.logger {}
 
-private val LINE_PREFIX_REGEX = Regex("\\d+")
+private val LINE_PREFIX_REGEX = Regex("COOKIE_(\\d+)")
 
 @SpringBootTest
 @ContextConfiguration
@@ -39,9 +39,9 @@ class CookieExtractorControllerTest @Autowired constructor(
         @JvmStatic
         @DynamicPropertySource
         fun properties(props: DynamicPropertyRegistry) {
-            props.add("cookie-extractor.dir") {
-                Files.createTempDirectory("cookie-extractor-test").toString().also {
-                    log.info { "Writing cookies to directory: $it" }
+            props.add("cookie-extractor.files.main") {
+                Files.createTempDirectory("cookie-extractor-test").resolve("main.sh").toString().also {
+                    log.info { "Writing cookies to $it" }
                 }
             }
         }
@@ -72,10 +72,12 @@ class CookieExtractorControllerTest @Autowired constructor(
             }
         }
 
-        val lines = Files.readAllLines(cookieExtractorProperties.dir.resolve("main.properties"))
+        val lines = Files.readAllLines(cookieExtractorProperties.files["main"])
         val p = parseRequestPrefix(lines[0])
         val r = Random(p)
-        val expectedLines = (0 until cookieCount).map { formatProperty("${p}-${it}.NAME", randomString(10, r)) }
+        val expectedLines = (0 until cookieCount).map {
+            formatShellVariable("COOKIE_${p}-${it}.NAME", randomString(10, r))
+        }
 
         assertThat(lines).containsExactlyElementsOf(expectedLines)
 
@@ -83,7 +85,7 @@ class CookieExtractorControllerTest @Autowired constructor(
 
     fun parseRequestPrefix(line: String): Int {
         val m = LINE_PREFIX_REGEX.matchAt(line, 0) ?: throw RuntimeException("Unable to parse line: $line")
-        return m.groups[0]!!.value.toInt()
+        return m.groups[1]!!.value.toInt()
     }
 
     fun randomString(maxLength: Int, random: Random): String {

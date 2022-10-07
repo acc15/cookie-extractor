@@ -12,59 +12,43 @@ import org.springframework.web.bind.annotation.RestController
 import ru.vm.cookieextractor.server.model.CookieRequest
 import java.io.FileWriter
 import java.nio.file.Files
-import java.nio.file.Path
-import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.LinkedHashMap
 import kotlin.io.path.isDirectory
 
 private val log = KotlinLogging.logger {  }
 
-fun formatProperty(key: String, value: String) = "${key}=\$'${value.replace("'", "\\'")}'"
-
 @RestController
-class CookieExtractorController(
-    val cookieExtractorProperties: CookieExtractorProperties,
-    val fileTemplate: freemarker.template.Template,
-    val propertyTemplate: freemarker.template.Template,
-) {
+class CookieExtractorController(val cookieExtractorProperties: CookieExtractorProperties) {
 
-    val locks = ConcurrentHashMap<Path, Mutex>()
+    private val locks = Array(10) { Mutex() }
 
     @PostMapping("/cookies")
     suspend fun handleCookies(@RequestBody data: CookieRequest) =
         withContext(MDCContext(mapOf("traceId" to java.util.UUID.randomUUID().toString()))) {
 
+            val file = cookieExtractorProperties.files[data.clientId]
+
+            val prefix = if (file == null) "Ignoring received" else "Received"
+            val msg = "$prefix data from client: ${data.clientId}"
             if (log.isTraceEnabled) {
-                log.trace { "Received data: $data" }
+                log.trace { "$msg. Data: $data" }
             } else {
-                log.info { "Received data from client: ${data.clientId}" }
+                log.info { msg }
             }
 
-            val templateModel = mapOf("request" to data, "dir" to cookieExtractorProperties.dir)
-
-            val fileName = fileTemplate.process(templateModel)
-            val propertiesFile = cookieExtractorProperties.dir.resolve(fileName)
-
-            val map = data.cookies.associateTo(LinkedHashMap()) {
-                propertyTemplate.process(templateModel + mapOf("cookie" to it)) to it.value
+            if (file == null) {
+                return@withContext
             }
 
             withContext(Dispatchers.IO) {
-
-                val dir = propertiesFile.parent
-                if (!dir.isDirectory()) {
-                    Files.createDirectories(dir)
-                }
-
-                locks.computeIfAbsent(propertiesFile) { Mutex() }.withLock {
-                    FileWriter(propertiesFile.toFile()).use {
-                        log.debug { "Writing cookies to file $propertiesFile" }
-                        for (cookie in map) {
-                            log.trace { "Writing key ${cookie.key}..." }
-                            it.write(formatProperty(cookie.key, cookie.value) + System.lineSeparator())
+                locks[Math.floorMod(file.hashCode(), locks.size)].withLock {
+                    FileWriter(createParentDirs(file).toFile()).use {
+                        log.debug { "Writing cookies to file $file" }
+                        for (cookie in data.cookies) {
+                            log.trace { "Writing cookie ${cookie.name}..." }
+                            it.write(formatShellCookie(cookie) + System.lineSeparator())
                         }
                     }
-                    log.debug { "Cookies has been written to $propertiesFile" }
+                    log.debug { "Cookies has been written to $file" }
                 }
             }
         }
