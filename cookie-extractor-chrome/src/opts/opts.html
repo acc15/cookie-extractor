@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cookie Extractor options</title>
+</head>
+<body>
+    <div id="background"></div>
+    <div id="root">
+        
+        <form id="form">
+            <h1>Cookie Extractor options</h1>
+            <h2>General</h2>
+            <div class="control-row">
+                <label for="url">Server URL</label>
+                <input id="url" name="url" type="text" required="true">
+            </div>
+            <div class="control-row">
+                <label for="client-id">Client ID</label>
+                <input id="client-id" name="clientId" type="text" required="true">
+            </div>
+            <h2>Additional</h2>
+            <div class="control-row">
+                <label for="max-retries">Max retries</label>
+                <input id="max-retries" name="maxRetries" type="number" min="0" required="true">
+            </div>
+            <div class="control-row">
+                <label for="retry-timeout">Retry timeout</label>
+                <input id="retry-timeout" name="retryTimeout" type="number" min="0" required="true">
+            </div>
+            <div class="control-row">
+                <label for="debounce-timeout">Debounce Timeout</label>
+                <input id="debounce-timeout" name="debounceTimeout" type="number" min="0" required="true">
+            </div>
+            <h2>Cookie filters</h2>
+            <table id="cookie-filters">
+                <thead>
+                    <tr>
+                        <th>Domain</th>
+                        <th>Name</th>
+                        <th>Path</th>
+                        <th>Url</th>
+                        <th>StoreId</th>
+                        <th>Session</th>
+                        <th>Secure</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template id="cookie-filter-template">
+                        <tr>
+                            <td><input name="domain" type="text"></td>
+                            <td><input name="name" type="text"></td>
+                            <td><input name="path" type="text"></td>
+                            <td><input name="url" type="text"></td>
+                            <td><input name="storeId" type="text"></td>
+                            <td><input name="session" type="checkbox"></td>
+                            <td><input name="secure" type="checkbox"></td>
+                            <td><input name="delete" type="button" value="Delete"></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="button-row">
+                <input type="submit" value="Save">
+                <input id="add-cookie-filter" type="button" value="Add Cookie Filter">
+            </div>
+            <div id="status"></div>
+        </form>
+    </div>
+</body>
+</html>

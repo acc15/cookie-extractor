@@ -1,9 +1,0 @@
-{
-    "$schema": "./config.schema.json",
-    "clientId": "main",
-    "url": "http://localhost:9420/cookies",
-    "cookies": [],
-    "debounceTimeout": 5000,
-    "retryTimeout": 10000,
-    "maxRetries": 5
-}

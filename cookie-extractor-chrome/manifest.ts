@@ -8,12 +8,10 @@ const manifest: chrome.runtime.Manifest = {
     background: {
         service_worker: "background.js"
     },
-    host_permissions: [
-        "<all_urls>"
-    ],
-    permissions: [
-        "cookies"
-    ],
+    host_permissions: [ "<all_urls>" ],
+    permissions: [ "cookies", "storage" ],
+    options_page: "opts.html",
+    action: {},
     icons: {
         64: "icon.png"
     }

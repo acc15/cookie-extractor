@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    font-size: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+#background {
+    opacity: 0.1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../icon/icon.svg");
+    background-repeat: no-repeat;
+    background-size: 600px;
+    z-index: -100;
+}
+
+#root {
+    margin: 0 auto;
+    min-width: 800px;
+    width: 80%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    padding: 16px;
+    height: 100%;
+    box-shadow: 8px 0 16px lightgray;
+}
+
+.control-row {
+    width: 100%;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-row label {
+    flex: 0 200px;
+}
+
+.control-row input {
+    flex: 1;
+}
+
+.button-row {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+#cookie-filters {
+    width: 100%;
+}
+
+#cookie-filters th {
+    text-align: left;
+}
+
+#cookie-filters, #cookie-filters td, #cookie-filters th {
+    border: 1px solid lightgray;
+    border-collapse: collapse;    
+    padding: 4px;
+}
+
+#cookie-filters input {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+

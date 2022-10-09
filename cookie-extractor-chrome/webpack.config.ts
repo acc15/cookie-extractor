@@ -3,6 +3,8 @@ import webpack from "webpack";
 import fs from "fs";
 
 import Copy from 'copy-webpack-plugin';
+import Html from 'html-webpack-plugin';
+import Css from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { loadModule } from "./pkg";
@@ -13,10 +15,12 @@ export default (env: any, argv: any) => {
     const dist = path.resolve(__dirname, 'dist')
     const config: webpack.Configuration = {
         entry: {
-            background: "./src/background.ts"
+            background: "./src/background.ts",
+            opts: "./src/opts/opts.ts"
         },
         output: {
             path: dist,
+            assetModuleFilename: '[name][ext]',
             clean: {
                 keep: "config.json"
             }
@@ -33,11 +37,11 @@ export default (env: any, argv: any) => {
             new Copy({
                 patterns: [ 
                     "./src/icon/icon.png",
-                    "./src/config.schema.json",
+                    /* "./src/config.schema.json",
                     { 
                         from:"./src/config.json",
                         filter: async (p) => new Promise((r) => fs.access(path.resolve(dist, path.basename(p)), e => r(Boolean(e))))
-                    },
+                    }, */
                     { 
                         from: "./manifest.ts", 
                         to: "manifest.json", 
@@ -45,6 +49,8 @@ export default (env: any, argv: any) => {
                     }
                 ]
             }),
+            new Html({ template: "./src/opts/opts.html", filename: "opts.html", chunks: ["opts"] }),
+            new Css(),
             env.analyze && new BundleAnalyzerPlugin()
         ].filter(v => v),
         module: {
@@ -53,11 +59,20 @@ export default (env: any, argv: any) => {
                     test: /\.ts$/i,
                     loader: 'ts-loader',
                     exclude: ['/node_modules/'],
+                },
+                {
+                    test: /\.css$/i,
+                    use: ['style-loader', 'css-loader']
+                },
+                {
+                    test: /\.svg$/i,
+                    type: "asset",
+                    use: "svgo-loader"
                 }
             ]
         },
         resolve: {
-            extensions: ['.js', '.ts']
+            extensions: ['.js', '.ts'],
         }
     };
     return config;
