@@ -42,16 +42,24 @@ export default class CookieManager {
     }
 
     private async send(id: TimerId, cfg: Config, retry: number) {
-        const data = await fetchCookies(cfg);
+        
+        let request: CookieRequest;
         try {
-            await postCookies(cfg, data)
+            request = await fetchCookies(cfg);
+        } catch (e: any) {
+            console.error("Unable to fetch cookies", e);
+            return;
+        }
+        
+        try {
+            await postCookies(cfg, request)
             console.info(`Cookies has been successfully send to ${cfg.url}`)
         } catch (e: any) {
             if (e.message === "Failed to fetch") {
                 console.info("Unable to send data to server due to connection problems", 
                     `\nRetry: ${retry}`, 
                     "\nError:", e, 
-                    "\nData:", data
+                    "\nData:", request
                 );
                 this.retry(id, cfg, retry + 1);
             } else {
