@@ -1,17 +1,11 @@
 import "./opts.css";
 
 import { Config, loadConfig, storeConfig } from "../config";
-import { getInputValue, setInputValue } from "./dom-utils";
-
-const INDETERMINATE_NEXT_STATE: {[k: string]: boolean | undefined} = {
-    undefined: true,
-    true: false,
-    false: undefined
-};
+import { bindInput } from "./utils";
 
 loadConfig().then(state => {
 
-    function addCookieFilter(cookieState: chrome.cookies.GetAllDetails) {
+    function addCookieFilter(cookie: chrome.cookies.GetAllDetails) {
         const template = document.getElementById("cookie-filter-template") as HTMLTemplateElement; 
         const insertionPlace = template.parentNode!!; 
         const row = template.content.children[0].cloneNode(true) as HTMLTableRowElement;
@@ -27,21 +21,7 @@ loadConfig().then(state => {
                     console.log(`Cookie at ${index} deleted`, state);
                 });
             } else {
-                setInputValue(input, cookieState[input.name as keyof chrome.cookies.GetAllDetails]);
-                input.addEventListener("change", e => {
-                    const i = e.target as HTMLInputElement;
-                    const v = cookieState as any;
-                    const nextValue = i.type === "checkbox" ? INDETERMINATE_NEXT_STATE[String(v[i.name])] : getInputValue(i); 
-                    if (nextValue === undefined) {
-                        delete v[i.name];
-                    } else {
-                        v[i.name] = nextValue;
-                    }
-                    if (i.type === "checkbox") {
-                        setInputValue(i, nextValue);
-                    }
-                    console.log(`Cookie ${i.name} changed`, state);
-                });
+                bindInput(input, cookie);
             }
         }
         insertionPlace.appendChild(row);
@@ -50,15 +30,7 @@ loadConfig().then(state => {
     (["clientId", "url", "debounceTimeout", "maxRetries", "retryTimeout"] as Array<keyof Config>)
         .flatMap(f => Array.from(document.getElementsByName(f)))
         .map(e => e as HTMLInputElement)
-        .forEach(input => {
-            setInputValue(input, state[input.name as keyof Config]);
-            input.addEventListener("change", e => {
-                const i = e.target as HTMLInputElement;
-                (state as any)[i.name] = getInputValue(i);
-                console.log(`State ${i.name} changed`, state);
-            });
-        });
-
+        .forEach(input => bindInput(input, state));
     for (const cookie of state.cookies) {
         addCookieFilter(cookie);
     }
