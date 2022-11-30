@@ -1,6 +1,5 @@
 import path from "path";
 import webpack from "webpack";
-import fs from "fs";
 
 import Copy from 'copy-webpack-plugin';
 import Html from 'html-webpack-plugin';
@@ -37,11 +36,6 @@ export default (env: any, argv: any) => {
             new Copy({
                 patterns: [ 
                     "./src/icon/icon.png",
-                    /* "./src/config.schema.json",
-                    { 
-                        from:"./src/config.json",
-                        filter: async (p) => new Promise((r) => fs.access(path.resolve(dist, path.basename(p)), e => r(Boolean(e))))
-                    }, */
                     { 
                         from: "./manifest.ts", 
                         to: "manifest.json", 
