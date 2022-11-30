@@ -20,9 +20,7 @@ export default (env: any, argv: any) => {
         output: {
             path: dist,
             assetModuleFilename: '[name][ext]',
-            clean: {
-                keep: "config.json"
-            }
+            clean: true
         },
         performance: {
             maxAssetSize: 1500000,
