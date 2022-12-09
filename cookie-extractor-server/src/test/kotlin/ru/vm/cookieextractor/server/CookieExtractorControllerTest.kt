@@ -24,15 +24,12 @@ import kotlin.random.Random
 
 private val log = KotlinLogging.logger {}
 
-private val LINE_PREFIX_REGEX = Regex("COOKIE_(\\d+)")
-
 @SpringBootTest
 @ContextConfiguration
 @AutoConfigureWebTestClient(timeout = "PT30S")
 class CookieExtractorControllerTest @Autowired constructor(
     val client: WebTestClient,
-    val objectMapper: ObjectMapper,
-    val cookieExtractorProperties: CookieExtractorProperties
+    val objectMapper: ObjectMapper
 ) {
 
     companion object {
@@ -54,65 +51,6 @@ class CookieExtractorControllerTest @Autowired constructor(
             .exchange()
             .expectStatus()
             .is2xxSuccessful
-    }
-
-    @Test
-    internal fun sendMultipleData() {
-
-        val requestCount = 100
-        val cookieCount = 1000
-
-        runBlocking(Dispatchers.Default) {
-            repeat(requestCount) { requestIndex ->
-                launch {
-                    client.post().uri("/cookies")
-                        .bodyValue(testData.copy(cookies = makeTestCookies(requestIndex, cookieCount)))
-                        .exchange()
-                }
-            }
-        }
-
-        val lines = Files.readAllLines(cookieExtractorProperties.files["main"])
-        val p = parseRequestPrefix(lines[0])
-        val r = Random(p)
-        val expectedLines = (0 until cookieCount).map {
-            formatShellVariable("COOKIE_${p}-${it}.NAME", randomString(10, r))
-        }
-
-        assertThat(lines).containsExactlyElementsOf(expectedLines)
-
-    }
-
-    fun parseRequestPrefix(line: String): Int {
-        val m = LINE_PREFIX_REGEX.matchAt(line, 0) ?: throw RuntimeException("Unable to parse line: $line")
-        return m.groups[1]!!.value.toInt()
-    }
-
-    fun randomString(maxLength: Int, random: Random): String {
-        return (0 until random.nextInt(maxLength + 1)).map {
-            random.nextInt('a'.code, 'z'.code).toChar()
-        }.joinToString("")
-    }
-
-    fun makeTestCookies(requestIndex: Int, cookieCount: Int): List<CookieInfo> {
-        val random = Random(requestIndex)
-        return (0 until cookieCount)
-            .map { cookieIndex ->
-                val k = "${requestIndex}-${cookieIndex}"
-                CookieInfo(
-                    domain = "$k.domain.test",
-                    name = "$k.name",
-                    storeId = "$k.storeId",
-                    value = randomString(10, random),
-                    session = false,
-                    hostOnly = false,
-                    expirationDate = null,
-                    path = "$k.path",
-                    httpOnly = false,
-                    secure = false,
-                    sameSite = SameSiteStatus.UNSPECIFIED
-                )
-            }
     }
 
     private val testData = CookieExtractorControllerTest::class.java.getResourceAsStream("testdata.json")!!.use {
