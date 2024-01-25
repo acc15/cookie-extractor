@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.vm.cookieextractor.server.model.CookieRequest
 import java.io.FileWriter
-import java.nio.file.Files
-import kotlin.io.path.isDirectory
 
-private val log = KotlinLogging.logger {  }
+private val log = KotlinLogging.logger {}
 
 @RestController
 class CookieExtractorController(val cookieExtractorProperties: CookieExtractorProperties) {
 
-    private val locks = Array(10) { Mutex() }
+    private val locks = Array(Runtime.getRuntime().availableProcessors()) { Mutex() }
 
     @PostMapping("/cookies")
     suspend fun handleCookies(@RequestBody data: CookieRequest) =

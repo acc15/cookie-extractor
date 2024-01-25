@@ -3,21 +3,19 @@ import java.nio.file.Path
 import java.nio.file.Files
 
 plugins {
-	id("io.spring.dependency-management") version "1.0.14.RELEASE"
-	id("org.springframework.boot") version "2.7.4"
-	kotlin("jvm") version "1.7.20"
-	kotlin("plugin.spring") version "1.7.20"
+	id("io.spring.dependency-management") version "1.1.4"
+	id("org.springframework.boot") version "3.2.2"
+	kotlin("jvm") version "1.9.22"
+	kotlin("plugin.spring") version "1.9.22"
 }
 
 group = "ru.vm"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
 }
-
-val kotlinLoggingVersion = "3.0.0"
 
 dependencies {
 	implementation(kotlin("reflect"))
@@ -26,8 +24,11 @@ dependencies {
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
-	implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
+	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<KotlinCompile> {
