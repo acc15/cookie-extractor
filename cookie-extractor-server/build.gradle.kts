@@ -26,7 +26,6 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j")
 	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

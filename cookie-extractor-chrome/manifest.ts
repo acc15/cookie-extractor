@@ -5,6 +5,7 @@ const manifest: chrome.runtime.Manifest = {
     name: pkg.name || "",
     version: pkg.version || "",
     description: pkg.description,
+    minimum_chrome_version: "116",
     background: {
         service_worker: "background.js"
     },

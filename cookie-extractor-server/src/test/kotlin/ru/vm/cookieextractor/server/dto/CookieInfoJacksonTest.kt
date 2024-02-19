@@ -1,4 +1,4 @@
-package ru.vm.cookieextractor.server.model
+package ru.vm.cookieextractor.server.dto
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

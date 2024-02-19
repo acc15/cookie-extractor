@@ -1,8 +1,18 @@
-logging:
-  level:
-    ru.vm.cookieextractor: info
+#logging:
+#  level:
+#    web: debug
+#    ru.vm.cookieextractor: info
 server:
-  port: 9420
-cookie-extractor:
-  files:
-    main: cookies/main.sh
+  error:
+    includeMessage: ALWAYS
+  port: 9421
+cookie:
+  clients:
+    main:
+      files:
+        sh:
+          format: shell
+          path: cookies/main.sh
+        json:
+          format: json
+          path: cookies/cookies.json

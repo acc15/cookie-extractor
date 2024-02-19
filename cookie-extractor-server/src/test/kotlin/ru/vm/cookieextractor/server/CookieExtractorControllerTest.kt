@@ -2,11 +2,7 @@ package ru.vm.cookieextractor.server
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
@@ -15,12 +11,8 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.web.reactive.server.WebTestClient
-import ru.vm.cookieextractor.server.model.CookieInfo
-import ru.vm.cookieextractor.server.model.CookieRequest
-import ru.vm.cookieextractor.server.model.SameSiteStatus
-import java.lang.RuntimeException
+import ru.vm.cookieextractor.server.dto.CookieRequest
 import java.nio.file.Files
-import kotlin.random.Random
 
 private val log = KotlinLogging.logger {}
 

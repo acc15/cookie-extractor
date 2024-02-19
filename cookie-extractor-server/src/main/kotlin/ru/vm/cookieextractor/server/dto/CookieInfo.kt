@@ -1,14 +1,6 @@
-package ru.vm.cookieextractor.server.model
+package ru.vm.cookieextractor.server.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonProperty
-
-enum class SameSiteStatus {
-    @JsonProperty("unspecified") UNSPECIFIED,
-    @JsonProperty("no_restriction") NO_RESTRICTION,
-    @JsonProperty("lax") LAX,
-    @JsonProperty("strict") STRICT;
-}
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class CookieInfo(
@@ -37,9 +29,4 @@ data class CookieInfo(
      * @since Chrome 51.
      */
     val sameSite: SameSiteStatus
-)
-
-data class CookieRequest(
-    val clientId: String,
-    val cookies: List<CookieInfo>
 )
