@@ -16,7 +16,9 @@ import java.nio.file.Files
 
 private val log = KotlinLogging.logger {}
 
-@SpringBootTest
+@SpringBootTest(properties = [
+    "cookie-extractor.clients.main.files.sh.format=shell"
+])
 @ContextConfiguration
 @AutoConfigureWebTestClient(timeout = "PT30S")
 class CookieExtractorControllerTest @Autowired constructor(
@@ -28,7 +30,7 @@ class CookieExtractorControllerTest @Autowired constructor(
         @JvmStatic
         @DynamicPropertySource
         fun properties(props: DynamicPropertyRegistry) {
-            props.add("cookie-extractor.files.main") {
+            props.add("cookie-extractor.clients.main.files.sh.path") {
                 Files.createTempDirectory("cookie-extractor-test").resolve("main.sh").toString().also {
                     log.info { "Writing cookies to $it" }
                 }

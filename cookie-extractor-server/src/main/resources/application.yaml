@@ -6,7 +6,7 @@ server:
   error:
     includeMessage: ALWAYS
   port: 9421
-cookie:
+cookie-extractor:
   clients:
     main:
       files:
