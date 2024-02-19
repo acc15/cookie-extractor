@@ -1,4 +1,4 @@
-package ru.vm.cookieextractor.server
+package ru.vm.cookieextractor.server.util
 
 import kotlinx.coroutines.sync.Mutex
 
